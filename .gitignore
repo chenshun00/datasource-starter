@@ -1,0 +1,8 @@
+.idea
+*.iml
+spring-datasource-boot-autoconfigure/target
+spring-datasource-boot-starter/target
+spring-memcache-boot-autoconfigure/target
+spring-memcache-boot-starter/target
+spring-multi-datasource-boot-autoconfigure/target
+spring-multi-datasource-boot-starter/target

@@ -1,0 +1,6 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  io.github.chenshun00.datasource.DatasourceAutoConfigure
+
+
+org.springframework.context.ApplicationListener=\
+io.github.chenshun00.datasource.DatasourceAutoLogListener
