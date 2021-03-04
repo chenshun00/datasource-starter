@@ -33,7 +33,7 @@ public class MemcacheAutoConfigure {
     private Integer port = 11211;
 
     @Bean(destroyMethod = "shutdown")
-    @ConditionalOnProperty(name = "chenshun00.memcache.config")
+    @ConditionalOnProperty(name = "chenshun00.memcache.url")
     public MemcachedClient memcachedClient() {
         XMemcachedClientFactoryBean clientFactoryBean = new XMemcachedClientFactoryBean();
         clientFactoryBean.setConnectionPoolSize(poolSize);

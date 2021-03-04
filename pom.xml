@@ -16,6 +16,8 @@
         <module>spring-multi-datasource-boot-starter</module>
         <module>spring-memcache-boot-autoconfigure</module>
         <module>spring-memcache-boot-starter</module>
+        <module>spring-starter-test</module>
+        <module>spring-starter-multi-test</module>
     </modules>
 
     <properties>

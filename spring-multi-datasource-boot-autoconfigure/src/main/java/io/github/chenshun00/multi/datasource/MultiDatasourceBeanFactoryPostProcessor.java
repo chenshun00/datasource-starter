@@ -25,7 +25,7 @@ public class MultiDatasourceBeanFactoryPostProcessor implements BeanPostProcesso
 
     public static final Logger logger = LoggerFactory.getLogger(MultiDatasourceBeanFactoryPostProcessor.class);
 
-    private static final String PREFIX = "chenshuun00.multi.datasource";
+    private static final String PREFIX = "chenshun00.multi.datasource";
 
     private Map<String, DataSourcePropertyBean.PropertyBean> datasourceProperties;
 

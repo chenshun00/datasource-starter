@@ -5,9 +5,7 @@ import lombok.Data;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
@@ -33,7 +31,6 @@ public class DatasourceAutoConfigure implements InitializingBean {
     private String password;
     private String url;
     private String xy;
-    private String dbInfoZk;
     private String driverClassName = "com.mysql.jdbc.Driver";
     private String type = "com.alibaba.druid.pool.DruidDataSource";
     private Integer minIdle = 5;
@@ -44,10 +41,6 @@ public class DatasourceAutoConfigure implements InitializingBean {
     private Boolean testWhileIdle = true;
     private Boolean testOnBorrow = false;
     private Boolean testOnReturn = false;
-    private String dbInfoRequestVersion;
-
-    @Autowired
-    private ApplicationContext applicationContext;
 
     @Bean(initMethod = "init", destroyMethod = "close")
     @Primary
