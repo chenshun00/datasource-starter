@@ -7,7 +7,7 @@
     <groupId>io.github.chenshun00</groupId>
     <artifactId>datasource-starter</artifactId>
     <packaging>pom</packaging>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0</version>
 
     <modules>
         <module>spring-datasource-boot-autoconfigure</module>

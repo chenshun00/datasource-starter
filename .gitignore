@@ -6,3 +6,5 @@ spring-memcache-boot-autoconfigure/target
 spring-memcache-boot-starter/target
 spring-multi-datasource-boot-autoconfigure/target
 spring-multi-datasource-boot-starter/target
+spring-starter-multi-test/target
+spring-starter-test/target

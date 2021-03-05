@@ -29,7 +29,6 @@ import java.util.Objects;
 /**
  * 注入 {@link BeanDefinition},分别注入了
  *
- * <code>
  * <ul>
  *     <li>{@link DruidDataSource}</li>
  *     <li>{@link SqlSessionFactoryBean}</li>
@@ -37,7 +36,6 @@ import java.util.Objects;
  *     <li>{@link SqlSessionTemplate}</li>
  *     <li>{@link MapperScannerConfigurer}</li>
  * </ul>
- * </code>
  *
  * @author chenshun00@gmail.com
  * @see EnableMultiDatasource
