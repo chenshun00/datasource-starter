@@ -56,6 +56,12 @@
             <artifactId>druid</artifactId>
             <version>${druid.version}</version>
         </dependency>
+
+        <dependency>
+            <groupId>io.github.chenshun00</groupId>
+            <artifactId>spring-multi-datasource-transactional</artifactId>
+            <version>1.0</version>
+        </dependency>
     </dependencies>
 
     <distributionManagement>

@@ -1,6 +1,7 @@
 package io.github.chenshun00.multi;
 
 import io.github.chenshun00.multi.datasource.export.EnableMultiDatasource;
+import io.github.chenshun00.multi.datasource.transactional.datasource.MyDataSourceTransactionManager;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -9,7 +10,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @since 2021/3/4 7:56 下午
  */
 @SpringBootApplication
-@EnableMultiDatasource
+@EnableMultiDatasource(MyDataSourceTransactionManager.class)
 public class MultiWebApplication {
 
     public static void main(String[] args) {

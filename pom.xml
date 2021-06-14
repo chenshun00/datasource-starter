@@ -18,6 +18,7 @@
         <module>spring-memcache-boot-starter</module>
         <module>spring-starter-test</module>
         <module>spring-starter-multi-test</module>
+        <module>spring-multi-datasource-transactional</module>
     </modules>
 
     <properties>

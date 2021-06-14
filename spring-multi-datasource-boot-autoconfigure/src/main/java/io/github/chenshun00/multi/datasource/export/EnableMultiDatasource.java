@@ -1,6 +1,7 @@
 package io.github.chenshun00.multi.datasource.export;
 
 import org.springframework.context.annotation.Import;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 
 import java.lang.annotation.*;
 
@@ -15,4 +16,5 @@ import java.lang.annotation.*;
 @Documented
 @Import({MultiDatasourceRegister.class})
 public @interface EnableMultiDatasource {
+    Class<?>[] value() default DataSourceTransactionManager.class;
 }
