@@ -14,6 +14,7 @@ import org.springframework.beans.factory.support.DefaultListableBeanFactory;
 import org.springframework.boot.context.properties.bind.Binder;
 import org.springframework.context.EnvironmentAware;
 import org.springframework.context.annotation.ImportBeanDefinitionRegistrar;
+import org.springframework.core.annotation.AnnotationAttributes;
 import org.springframework.core.env.Environment;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
@@ -65,6 +66,15 @@ public class MultiDatasourceRegister implements ImportBeanDefinitionRegistrar, E
     public void registerBeanDefinitions(AnnotationMetadata importingClassMetadata,
                                         BeanDefinitionRegistry registry) {
         Assert.notNull(environment, "environment 不能为空");
+
+        final AnnotationAttributes annotationAttributes =
+                AnnotationAttributes.fromMap(importingClassMetadata.getAnnotationAttributes(EnableMultiDatasource.class.getName(), false));
+
+        Class platformTransactionManagerClass = DataSourceTransactionManager.class;
+        if (annotationAttributes != null) {
+            platformTransactionManagerClass = annotationAttributes.getClass("value");
+        }
+
         final Map<String, DataSourcePropertyBean.PropertyBean> datasourceProperties
                 = Binder.get(environment).bindOrCreate("chenshun00.multi.datasource", DataSourcePropertyBean.class).getDatasourceProperties();
 
@@ -101,7 +111,7 @@ public class MultiDatasourceRegister implements ImportBeanDefinitionRegistrar, E
             }
 
             {
-                final BeanDefinitionBuilder platformTransactionManager = BeanDefinitionBuilder.genericBeanDefinition(DataSourceTransactionManager.class);
+                final BeanDefinitionBuilder platformTransactionManager = BeanDefinitionBuilder.genericBeanDefinition(platformTransactionManagerClass);
                 platformTransactionManager.addConstructorArgReference(datasourceName);
                 registry.registerBeanDefinition(String.format("%s%s", datasourceName, "PlatformTransactionManager"), platformTransactionManager.getBeanDefinition());
             }

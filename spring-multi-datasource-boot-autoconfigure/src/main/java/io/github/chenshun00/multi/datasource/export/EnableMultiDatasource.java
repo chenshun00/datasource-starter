@@ -16,5 +16,5 @@ import java.lang.annotation.*;
 @Documented
 @Import({MultiDatasourceRegister.class})
 public @interface EnableMultiDatasource {
-    Class<?>[] value() default DataSourceTransactionManager.class;
+    Class<?> value() default DataSourceTransactionManager.class;
 }

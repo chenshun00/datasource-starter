@@ -5,6 +5,8 @@ import io.github.chenshun00.multi.datasource.transactional.support.MyTransaction
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.transaction.TransactionStatus;
 
@@ -19,6 +21,8 @@ import java.util.stream.Collectors;
  */
 @Aspect
 public class MultiTransactionAspectj {
+
+    public static final Logger logger = LoggerFactory.getLogger(MultiTransactionAspectj.class);
 
     private final ApplicationContext applicationContext;
 
@@ -37,7 +41,6 @@ public class MultiTransactionAspectj {
         final List<String> collect = Arrays.stream(values).collect(Collectors.toList());
         List<TrContext> trContexts = new ArrayList<>();
         try {
-
             for (String s : beanNamesForType) {
                 if (collect.contains(s)) {
                     final MyDataSourceTransactionManager dataSourceTransactionManager = applicationContext.getBean(s, MyDataSourceTransactionManager.class);
@@ -48,12 +51,23 @@ public class MultiTransactionAspectj {
             return joinPoint.proceed();
         } catch (Throwable e) {
             error = true;
-            trContexts.forEach(x -> x.dataSourceTransactionManager.rollback(x.transaction));
+            for (TrContext trContext : trContexts) {
+                try {
+                    trContext.dataSourceTransactionManager.rollback(trContext.transaction);
+                } catch (Exception sql) {
+                    logger.error("[事务回滚出现错误][error:{}]", e.getMessage(), e);
+                }
+            }
             throw e;
         } finally {
             if (!error) {
                 for (TrContext trContext : trContexts) {
-                    trContext.dataSourceTransactionManager.commit(trContext.transaction);
+                    try {
+                        trContext.dataSourceTransactionManager.commit(trContext.transaction);
+                    } catch (Exception e) {
+                        logger.error("[事务提交出现错误][error:{}]", e.getMessage(), e);
+
+                    }
                 }
             }
             MyTransactionSynchronizationManager.clear();
