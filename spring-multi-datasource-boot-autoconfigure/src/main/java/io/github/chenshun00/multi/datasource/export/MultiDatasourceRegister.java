@@ -2,6 +2,8 @@ package io.github.chenshun00.multi.datasource.export;
 
 import com.alibaba.druid.pool.DruidDataSource;
 import io.github.chenshun00.multi.datasource.DataSourcePropertyBean;
+import io.github.chenshun00.multi.datasource.transactional.MultiTransactionAspectj;
+import io.github.chenshun00.multi.datasource.transactional.datasource.MyDataSourceTransactionManager;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.mybatis.spring.mapper.MapperScannerConfigurer;
@@ -70,9 +72,13 @@ public class MultiDatasourceRegister implements ImportBeanDefinitionRegistrar, E
         final AnnotationAttributes annotationAttributes =
                 AnnotationAttributes.fromMap(importingClassMetadata.getAnnotationAttributes(EnableMultiDatasource.class.getName(), false));
 
-        Class platformTransactionManagerClass = DataSourceTransactionManager.class;
+        Class<?> platformTransactionManagerClass = DataSourceTransactionManager.class;
         if (annotationAttributes != null) {
             platformTransactionManagerClass = annotationAttributes.getClass("value");
+            if (MyDataSourceTransactionManager.class.equals(platformTransactionManagerClass)) {
+                BeanDefinitionBuilder aspectj = BeanDefinitionBuilder.genericBeanDefinition(MultiTransactionAspectj.class);
+                registry.registerBeanDefinition("multiTransactionAspectj", aspectj.getBeanDefinition());
+            }
         }
 
         final Map<String, DataSourcePropertyBean.PropertyBean> datasourceProperties
