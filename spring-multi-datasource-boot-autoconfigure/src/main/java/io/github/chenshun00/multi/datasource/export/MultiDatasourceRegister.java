@@ -48,6 +48,8 @@ public class MultiDatasourceRegister implements ImportBeanDefinitionRegistrar, E
 
     private final static Logger logger = LoggerFactory.getLogger(MultiDatasourceRegister.class);
 
+    public final static String PLATFORM_TRANSACTION_MANAGER = "PlatformTransactionManager";
+
     private Environment environment;
 
     /**
@@ -118,8 +120,14 @@ public class MultiDatasourceRegister implements ImportBeanDefinitionRegistrar, E
 
             {
                 final BeanDefinitionBuilder platformTransactionManager = BeanDefinitionBuilder.genericBeanDefinition(platformTransactionManagerClass);
-                platformTransactionManager.addConstructorArgReference(datasourceName);
-                registry.registerBeanDefinition(String.format("%s%s", datasourceName, "PlatformTransactionManager"), platformTransactionManager.getBeanDefinition());
+                if (MyDataSourceTransactionManager.class.equals(platformTransactionManagerClass)) {
+                    platformTransactionManager.addConstructorArgReference(datasourceName);
+                    platformTransactionManager.addConstructorArgReference(datasourceName);
+                } else {
+                    platformTransactionManager.addConstructorArgReference(datasourceName);
+                }
+
+                registry.registerBeanDefinition(String.format("%s%s", datasourceName, PLATFORM_TRANSACTION_MANAGER), platformTransactionManager.getBeanDefinition());
             }
 
             {
