@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -16,6 +17,7 @@ import java.util.Map;
  * @since 2021/1/10 10:20 上午
  */
 @ConfigurationProperties(prefix = "chenshun00.multi.datasource")
+@Component
 public class DataSourcePropertyBean {
 
     private final Map<String, PropertyBean> datasourceProperties = new HashMap<>();
