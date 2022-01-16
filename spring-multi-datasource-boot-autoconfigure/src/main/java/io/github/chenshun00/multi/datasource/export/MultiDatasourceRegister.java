@@ -75,11 +75,13 @@ public class MultiDatasourceRegister implements ImportBeanDefinitionRegistrar, E
                 AnnotationAttributes.fromMap(importingClassMetadata.getAnnotationAttributes(EnableMultiDatasource.class.getName(), false));
 
         Class<?> platformTransactionManagerClass = DataSourceTransactionManager.class;
+        boolean custom = false;
         if (annotationAttributes != null) {
             platformTransactionManagerClass = annotationAttributes.getClass("value");
             if (MyDataSourceTransactionManager.class.equals(platformTransactionManagerClass)) {
                 BeanDefinitionBuilder aspectj = BeanDefinitionBuilder.genericBeanDefinition(MultiTransactionAspectj.class);
                 registry.registerBeanDefinition("multiTransactionAspectj", aspectj.getBeanDefinition());
+                custom = true;
             }
         }
 
@@ -89,6 +91,7 @@ public class MultiDatasourceRegister implements ImportBeanDefinitionRegistrar, E
         for (Map.Entry<String, DataSourcePropertyBean.PropertyBean> entry : datasourceProperties.entrySet()) {
             final String datasourceName = entry.getKey();
             final DataSourcePropertyBean.PropertyBean dataSourceProperty = entry.getValue();
+            CustomTransactionFactory customTransactionFactory = new CustomTransactionFactory(datasourceName);
 
             {
                 BeanDefinitionBuilder datasource = BeanDefinitionBuilder.genericBeanDefinition(DruidDataSource.class);
@@ -100,6 +103,9 @@ public class MultiDatasourceRegister implements ImportBeanDefinitionRegistrar, E
             {
                 final BeanDefinitionBuilder sqlSessionFactory = BeanDefinitionBuilder.genericBeanDefinition(SqlSessionFactoryBean.class);
                 sqlSessionFactory.addPropertyReference("dataSource", datasourceName);
+                if (custom) {
+                    sqlSessionFactory.addPropertyValue("transactionFactory", customTransactionFactory);
+                }
                 final Resource[] resources;
                 try {
                     resources = new PathMatchingResourcePatternResolver()

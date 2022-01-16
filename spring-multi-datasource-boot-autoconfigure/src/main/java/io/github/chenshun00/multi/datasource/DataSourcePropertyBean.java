@@ -7,6 +7,7 @@ import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -91,5 +92,13 @@ public class DataSourcePropertyBean {
          * @see MapperScan#basePackages()
          */
         private String basePackages;
+
+
+        /**
+         * 连接初始化SQL
+         *
+         * @see DruidDataSource#setConnectionInitSqls(Collection) ()
+         */
+        private String initConnectionSqls;
     }
 }

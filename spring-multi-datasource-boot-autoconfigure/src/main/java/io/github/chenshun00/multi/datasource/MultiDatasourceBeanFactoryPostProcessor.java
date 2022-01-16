@@ -12,9 +12,12 @@ import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.boot.context.properties.bind.Binder;
 import org.springframework.context.EnvironmentAware;
 import org.springframework.core.env.Environment;
+import org.springframework.util.StringUtils;
 
+import java.util.Collections;
 import java.util.Map;
 import java.util.Objects;
+import java.util.StringTokenizer;
 
 /**
  * @author chenshun00@gmail.com
@@ -69,6 +72,16 @@ public class MultiDatasourceBeanFactoryPostProcessor implements BeanPostProcesso
             druidDataSource.setTestWhileIdle(propertyBean.getTestWhileIdle());
             druidDataSource.setTestOnBorrow(propertyBean.getTestOnBorrow());
             druidDataSource.setTestOnReturn(propertyBean.getTestOnReturn());
+            String initConnectionSqls = propertyBean.getInitConnectionSqls();
+            if (!StringUtils.isEmpty(initConnectionSqls)) {
+                try {
+                    StringTokenizer tokenizer = new StringTokenizer(initConnectionSqls, ";");
+                    druidDataSource.setConnectionInitSqls(Collections.list(tokenizer));
+                } catch (NumberFormatException e) {
+                    throw new IllegalStateException(String.format("给【%s】 bean 设置 initConnectionSqls 【%s】 失败",
+                            beanName, initConnectionSqls));
+                }
+            }
             return druidDataSource;
         }
         return bean;
