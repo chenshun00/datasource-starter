@@ -15,6 +15,10 @@
         单库连接池配置，已加依赖mysql驱动，druid连接池
     </description>
 
+    <properties>
+        <gpg.executable>gpg2</gpg.executable>
+    </properties>
+
     <dependencies>
         <dependency>
             <groupId>io.github.chenshun00</groupId>

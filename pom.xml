@@ -26,6 +26,7 @@
         <version-netty>4.1.32.Final</version-netty>
         <version-http-async>4.1.4</version-http-async>
         <version-lombok>1.18.4</version-lombok>
+        <gpg.executable>gpg2</gpg.executable>
     </properties>
 
 

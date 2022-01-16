@@ -11,6 +11,10 @@
 
     <artifactId>spring-multi-datasource-boot-starter</artifactId>
 
+    <properties>
+        <gpg.executable>gpg2</gpg.executable>
+    </properties>
+
     <dependencies>
         <dependency>
             <groupId>io.github.chenshun00</groupId>

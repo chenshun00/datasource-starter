@@ -10,6 +10,9 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>spring-memcache-boot-autoconfigure</artifactId>
+    <properties>
+        <gpg.executable>gpg2</gpg.executable>
+    </properties>
 
     <dependencies>
         <dependency>

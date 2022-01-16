@@ -9,6 +9,10 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
+    <properties>
+        <gpg.executable>gpg2</gpg.executable>
+    </properties>
+
     <artifactId>spring-datasource-boot-autoconfigure</artifactId>
 
     <dependencies>
