@@ -62,7 +62,7 @@
         <dependency>
             <groupId>io.github.chenshun00</groupId>
             <artifactId>spring-multi-datasource-transactional</artifactId>
-            <version>1.0</version>
+            <version>1.1</version>
         </dependency>
     </dependencies>
 
