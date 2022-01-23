@@ -19,6 +19,7 @@
         <module>spring-starter-test</module>
         <module>spring-starter-multi-test</module>
         <module>spring-multi-datasource-transactional</module>
+        <module>filter-chain</module>
     </modules>
 
     <properties>
